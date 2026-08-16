@@ -29,22 +29,22 @@ module tb_cross_correlator;
     initial begin
         $readmemh("left.txt", left_mem);
         $readmemh("right.txt", right_mem);
-        
+
         rst_n = 0;
         data_valid = 0;
         left_in = 0;
         right_in = 0;
-        
+
         #20 rst_n = 1;
         #10;
-        
-        // Push data changes strictly on the negative clock edge 
+
+        // Push data changes strictly on the negative clock edge
         @(negedge clk);
         data_valid = 1;
-        
+
         // Deterministic wait: It takes exactly 1 cycle to enter LOAD state
         @(negedge clk);
-        
+
         // Feed 8 samples per clock
         for (i = 0; i < 8; i = i + 1) begin
             for (j = 0; j < 8; j = j + 1) begin
